@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.vis.controller.WorkshopController"
+            styleClass="root-pane"
+            prefWidth="1000" prefHeight="700">
+
+    <top>
+        <HBox styleClass="module-nav" alignment="CENTER_LEFT" spacing="4">
+            <Button text="🏠  Dashboard" onAction="#goToDashboard" styleClass="nav-home-btn"/>
+            <Region HBox.hgrow="NEVER" minWidth="12"/>
+            <Button text="🚗  Vehicles"  onAction="#goToVehicles"  styleClass="nav-tab-btn"/>
+            <Button text="🔧  Workshop"  onAction="#goToWorkshop"  styleClass="nav-tab-btn nav-tab-active"/>
+            <Button text="👤  Customers" onAction="#goToCustomers" styleClass="nav-tab-btn"/>
+            <Button text="🚓  Police"    onAction="#goToPolice"    styleClass="nav-tab-btn"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="12" styleClass="content-pane">
+            <padding><Insets top="16" right="20" bottom="16" left="20"/></padding>
+
+            <Label text="Workshop — Service Records" styleClass="page-title"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="Add Record" onAction="#handleAdd"    styleClass="primary-btn"/>
+                <Button text="Delete"     onAction="#handleDelete" styleClass="danger-btn"/>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="statusLabel" styleClass="status-label"/>
+            </HBox>
+
+            <ProgressBar fx:id="progressBar" maxWidth="Infinity" prefHeight="6" styleClass="progress-bar"/>
+
+            <HBox spacing="15" VBox.vgrow="ALWAYS">
+                <VBox spacing="10" HBox.hgrow="ALWAYS">
+                    <TableView fx:id="serviceTable" VBox.vgrow="ALWAYS">
+                        <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+                        <placeholder><Label text="No service records found." styleClass="field-label"/></placeholder>
+                        <columns>
+                            <TableColumn fx:id="colId"   text="ID"          prefWidth="50"/>
+                            <TableColumn fx:id="colReg"  text="Vehicle Reg" prefWidth="140"/>
+                            <TableColumn fx:id="colDate" text="Date"        prefWidth="110"/>
+                            <TableColumn fx:id="colType" text="Type"        prefWidth="130"/>
+                            <TableColumn fx:id="colDesc" text="Description" prefWidth="260"/>
+                            <TableColumn fx:id="colCost" text="Cost (M)"    prefWidth="100"/>
+                        </columns>
+                    </TableView>
+
+                </VBox>
+                
+                <TitledPane text="Workshop Statistics" expanded="true" collapsible="false" styleClass="form-pane" prefWidth="350" maxHeight="Infinity">
+                    <BarChart fx:id="workshopChart" title="Total Cost by Service Type">
+                        <xAxis>
+                            <CategoryAxis label="Service Type" side="BOTTOM" />
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Cost (M)" side="LEFT" />
+                        </yAxis>
+                    </BarChart>
+                </TitledPane>
+            </HBox>
+
+
+
+        </VBox>
+    </center>
+</BorderPane>

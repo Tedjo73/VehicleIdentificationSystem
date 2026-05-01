@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.vis.controller.DashboardController"
+            styleClass="root-pane"
+            prefWidth="1100" prefHeight="700">
+
+    <top>
+        <MenuBar styleClass="menu-bar">
+            <Menu text="File">
+                <MenuItem text="Exit" onAction="#handleExit"/>
+            </Menu>
+            <Menu text="Modules">
+                <MenuItem text="Vehicles"  onAction="#goToVehicles"/>
+                <MenuItem text="Workshop"  onAction="#goToWorkshop"/>
+                <MenuItem text="Customers" onAction="#goToCustomer"/>
+                <MenuItem text="Police"    onAction="#goToPolice"/>
+            </Menu>
+            <Menu text="Account">
+                <MenuItem text="Logout" onAction="#handleLogout"/>
+            </Menu>
+        </MenuBar>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="dashboard-scroll" hbarPolicy="NEVER">
+            <VBox alignment="TOP_CENTER" spacing="28" styleClass="dashboard-center">
+                <padding><Insets top="32" right="48" bottom="32" left="48"/></padding>
+
+                <Label fx:id="welcomeLabel" styleClass="dash-title"/>
+                <Label text="Select a module or explore the live statistics below" styleClass="dash-subtitle"/>
+
+                <!-- Module Cards -->
+                <HBox spacing="20" alignment="CENTER">
+                    <VBox spacing="10" alignment="CENTER" styleClass="module-card">
+                        <Label text="🚗" style="-fx-font-size: 36px;"/>
+                        <Button text="Vehicles" onAction="#goToVehicles" styleClass="module-btn"/>
+                        <Label text="Manage vehicle registrations and owner details." style="-fx-text-fill: #7f8c8d; -fx-font-size: 12px;" wrapText="true" textAlignment="CENTER" maxWidth="130"/>
+                    </VBox>
+                    <VBox spacing="10" alignment="CENTER" styleClass="module-card">
+                        <Label text="🔧" style="-fx-font-size: 36px;"/>
+                        <Button text="Workshop" onAction="#goToWorkshop" styleClass="module-btn"/>
+                        <Label text="Track service records, repairs and maintenance." style="-fx-text-fill: #7f8c8d; -fx-font-size: 12px;" wrapText="true" textAlignment="CENTER" maxWidth="130"/>
+                    </VBox>
+                    <VBox spacing="10" alignment="CENTER" styleClass="module-card">
+                        <Label text="👤" style="-fx-font-size: 36px;"/>
+                        <Button text="Customers" onAction="#goToCustomer" styleClass="module-btn"/>
+                        <Label text="Manage client profiles, contact info and history." style="-fx-text-fill: #7f8c8d; -fx-font-size: 12px;" wrapText="true" textAlignment="CENTER" maxWidth="130"/>
+                    </VBox>
+                    <VBox spacing="10" alignment="CENTER" styleClass="module-card">
+                        <Label text="🚓" style="-fx-font-size: 36px;"/>
+                        <Button text="Police" onAction="#goToPolice" styleClass="module-btn"/>
+                        <Label text="Log traffic violations and official incident reports." style="-fx-text-fill: #7f8c8d; -fx-font-size: 12px;" wrapText="true" textAlignment="CENTER" maxWidth="130"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Summary stat badges -->
+                <HBox spacing="16" alignment="CENTER">
+                    <VBox styleClass="stat-badge" alignment="CENTER" spacing="4">
+                        <Label fx:id="statVehicles" text="—" styleClass="stat-number"/>
+                        <Label text="Vehicles" styleClass="stat-label"/>
+                    </VBox>
+                    <VBox styleClass="stat-badge" alignment="CENTER" spacing="4">
+                        <Label fx:id="statServices" text="—" styleClass="stat-number"/>
+                        <Label text="Service Records" styleClass="stat-label"/>
+                    </VBox>
+                    <VBox styleClass="stat-badge" alignment="CENTER" spacing="4">
+                        <Label fx:id="statCustomers" text="—" styleClass="stat-number"/>
+                        <Label text="Customers" styleClass="stat-label"/>
+                    </VBox>
+                    <VBox styleClass="stat-badge" alignment="CENTER" spacing="4">
+                        <Label fx:id="statViolations" text="—" styleClass="stat-number"/>
+                        <Label text="Violations" styleClass="stat-label"/>
+                    </VBox>
+                </HBox>
+
+                <!-- Quick Stats Charts -->
+                <Label text="Quick Statistics" styleClass="section-heading"/>
+                <HBox spacing="16" alignment="CENTER">
+                    <VBox styleClass="chart-card" spacing="6" alignment="CENTER">
+                        <Label text="🚗  Vehicles by Make" styleClass="chart-card-title"/>
+                        <PieChart fx:id="dashVehicleChart" prefHeight="200" prefWidth="240" legendVisible="false"/>
+                    </VBox>
+                    <VBox styleClass="chart-card" spacing="6" alignment="CENTER">
+                        <Label text="🔧  Service Cost by Type" styleClass="chart-card-title"/>
+                        <BarChart fx:id="dashWorkshopChart" prefHeight="200" prefWidth="260" legendVisible="false" animated="false">
+                            <xAxis><CategoryAxis side="BOTTOM"/></xAxis>
+                            <yAxis><NumberAxis side="LEFT"/></yAxis>
+                        </BarChart>
+                    </VBox>
+                    <VBox styleClass="chart-card" spacing="6" alignment="CENTER">
+                        <Label text="👤  Customers by Domain" styleClass="chart-card-title"/>
+                        <PieChart fx:id="dashCustomerChart" prefHeight="200" prefWidth="240" legendVisible="false"/>
+                    </VBox>
+                    <VBox styleClass="chart-card" spacing="6" alignment="CENTER">
+                        <Label text="🚓  Violations by Status" styleClass="chart-card-title"/>
+                        <PieChart fx:id="dashPoliceChart" prefHeight="200" prefWidth="240" legendVisible="false"/>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>
