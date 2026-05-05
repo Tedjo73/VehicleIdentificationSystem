@@ -162,4 +162,34 @@ public class CustomerController {
     @FXML private void goToWorkshop()  throws Exception { SceneManager.switchTo("Workshop.fxml"); }
     @FXML private void goToCustomers() throws Exception { /* already here */ }
     @FXML private void goToPolice()    throws Exception { SceneManager.switchTo("Police.fxml"); }
+    @FXML private void goToInsurance() throws Exception { SceneManager.switchTo("Insurance.fxml"); }
+
+    @FXML private void handleManageQueries() {
+        Customer sel = customerTable.getSelectionModel().getSelectedItem();
+        if (sel == null) { showStatus("Select a customer first.", true); return; }
+        try {
+            java.util.List<com.vis.model.CustomerQuery> queries = new com.vis.dao.CustomerQueryDAO().getAllQueries()
+                .stream().filter(q -> q.getCustomerId() == sel.getId())
+                .collect(Collectors.toList());
+            
+            Dialog<Void> dialog = new Dialog<>();
+            dialog.setTitle("Queries for " + sel.getName());
+            dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
+            
+            ListView<String> lv = new ListView<>();
+            if (queries.isEmpty()) {
+                lv.getItems().add("No queries found for this customer.");
+            } else {
+                queries.forEach(q -> lv.getItems().add(
+                    "Date: " + q.getQueryDate() + "\nQuery: " + q.getQueryText() + 
+                    "\nResponse: " + (q.getResponseText() == null || q.getResponseText().isBlank() ? "Pending Response" : q.getResponseText())
+                ));
+            }
+            lv.setPrefSize(450, 300);
+            dialog.getDialogPane().setContent(lv);
+            dialog.showAndWait();
+        } catch (Exception e) {
+            showStatus("Error loading queries.", true);
+        }
+    }
 }

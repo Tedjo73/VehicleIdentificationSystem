@@ -102,7 +102,9 @@ public class WorkshopController {
         }
         
         TextField dField = new TextField(); dField.setPromptText("YYYY-MM-DD");
-        TextField tField = new TextField();
+        ComboBox<String> tCombo = new ComboBox<>();
+        tCombo.getItems().addAll("Oil Change", "Tyre Rotation", "Brake Service", "Engine Diagnostics", "General Maintenance", "Other");
+        tCombo.setEditable(true);
         TextField cField = new TextField();
         TextArea dArea = new TextArea(); dArea.setPrefHeight(60);
 
@@ -110,7 +112,7 @@ public class WorkshopController {
         grid.setHgap(10); grid.setVgap(10);
         grid.add(new Label("Vehicle:"), 0, 0); grid.add(vCombo, 1, 0);
         grid.add(new Label("Date:"), 0, 1); grid.add(dField, 1, 1);
-        grid.add(new Label("Type:"), 0, 2); grid.add(tField, 1, 2);
+        grid.add(new Label("Type:"), 0, 2); grid.add(tCombo, 1, 2);
         grid.add(new Label("Cost:"), 0, 3); grid.add(cField, 1, 3);
         grid.add(new Label("Description:"), 0, 4); grid.add(dArea, 1, 4);
 
@@ -123,7 +125,7 @@ public class WorkshopController {
                 try {
                     int vid = Integer.parseInt(vCombo.getValue().split(" - ")[0]);
                     return new ServiceRecord(0, vid, dField.getText().trim(),
-                        tField.getText().trim(), dArea.getText().trim(),
+                        tCombo.getValue() != null ? tCombo.getValue().trim() : "", dArea.getText().trim(),
                         Double.parseDouble(cField.getText().trim()), "");
                 } catch(Exception e) { return null; }
             }
@@ -163,5 +165,6 @@ public class WorkshopController {
     @FXML private void goToVehicles()  throws Exception { SceneManager.switchTo("Vehicle.fxml"); }
     @FXML private void goToWorkshop()  throws Exception { /* already here */ }
     @FXML private void goToCustomers() throws Exception { SceneManager.switchTo("Customer.fxml"); }
+    @FXML private void goToInsurance() throws Exception { SceneManager.switchTo("Insurance.fxml"); }
     @FXML private void goToPolice()    throws Exception { SceneManager.switchTo("Police.fxml"); }
 }

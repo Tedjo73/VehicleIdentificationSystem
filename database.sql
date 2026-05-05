@@ -46,6 +46,24 @@ CREATE TABLE violation (
     status         VARCHAR(20) DEFAULT 'Unpaid'
 );
 
+CREATE TABLE customerquery (
+    query_id     SERIAL PRIMARY KEY,
+    customer_id  INT REFERENCES customer(customer_id) ON DELETE CASCADE,
+    vehicle_id   INT REFERENCES vehicle(vehicle_id) ON DELETE CASCADE,
+    query_date   DATE,
+    query_text   TEXT,
+    response_text TEXT
+);
+
+CREATE TABLE insurance (
+    insurance_id   SERIAL PRIMARY KEY,
+    vehicle_id     INT REFERENCES vehicle(vehicle_id) ON DELETE CASCADE,
+    provider_name  VARCHAR(150),
+    policy_number  VARCHAR(100) UNIQUE,
+    start_date     DATE,
+    end_date       DATE
+);
+
 -- ── Views ─────────────────────────────────────────────────
 CREATE VIEW v_vehicle_details AS
     SELECT  v.vehicle_id,
@@ -133,3 +151,12 @@ INSERT INTO violation (vehicle_id, violation_date, violation_type, fine_amount, 
     (1, '2025-03-05', 'Speeding',       500.00, 'Unpaid'),
     (2, '2025-04-18', 'No Seatbelt',    200.00, 'Paid'),
     (3, '2025-05-22', 'Illegal Parking', 150.00, 'Unpaid');
+
+INSERT INTO customerquery (customer_id, vehicle_id, query_date, query_text, response_text) VALUES
+    (1, 1, '2025-05-01', 'When is my next service due?', 'Your next service is due in 3 months.'),
+    (2, 2, '2025-05-03', 'Can I change my tyre size?', NULL);
+
+INSERT INTO insurance (vehicle_id, provider_name, policy_number, start_date, end_date) VALUES
+    (1, 'Lesotho National Insurance', 'LNI-998877', '2025-01-01', '2025-12-31'),
+    (2, 'Alliance Insurance', 'ALL-554433', '2025-03-15', '2026-03-14'),
+    (3, 'Metropolitan Lesotho', 'MET-112233', '2024-11-01', '2025-10-31');

@@ -110,7 +110,9 @@ public class VehicleController {
         dialog.setHeaderText(null);
 
         TextField rField = new TextField();
-        TextField mkField = new TextField();
+        ComboBox<String> mkCombo = new ComboBox<>();
+        mkCombo.getItems().addAll("Toyota", "Nissan", "Hyundai", "Ford", "Volkswagen", "BMW", "Mercedes-Benz", "Honda", "Other");
+        mkCombo.setEditable(true);
         TextField mdField = new TextField();
         TextField yField = new TextField();
         ComboBox<String> oCombo = new ComboBox<>();
@@ -123,7 +125,7 @@ public class VehicleController {
 
         if (v != null) {
             rField.setText(v.getRegistrationNumber());
-            mkField.setText(v.getMake());
+            mkCombo.setValue(v.getMake());
             mdField.setText(v.getModel());
             yField.setText(String.valueOf(v.getYear()));
             oCombo.getItems().stream()
@@ -134,7 +136,7 @@ public class VehicleController {
         GridPane grid = new GridPane();
         grid.setHgap(10); grid.setVgap(10);
         grid.add(new Label("Reg Number:"), 0, 0); grid.add(rField, 1, 0);
-        grid.add(new Label("Make:"), 0, 1); grid.add(mkField, 1, 1);
+        grid.add(new Label("Make:"), 0, 1); grid.add(mkCombo, 1, 1);
         grid.add(new Label("Model:"), 0, 2); grid.add(mdField, 1, 2);
         grid.add(new Label("Year:"), 0, 3); grid.add(yField, 1, 3);
         grid.add(new Label("Owner:"), 0, 4); grid.add(oCombo, 1, 4);
@@ -148,7 +150,7 @@ public class VehicleController {
                 try {
                     int oId = oCombo.getValue() != null ? Integer.parseInt(oCombo.getValue().split(" - ")[0]) : 0;
                     return new Vehicle(v == null ? 0 : v.getVehicleId(), rField.getText().trim(),
-                        mkField.getText().trim(), mdField.getText().trim(),
+                        mkCombo.getValue() != null ? mkCombo.getValue().trim() : "", mdField.getText().trim(),
                         Integer.parseInt(yField.getText().trim()), oId, "");
                 } catch(Exception e) { return null; }
             }
@@ -222,5 +224,6 @@ public class VehicleController {
     @FXML private void goToVehicles()  throws Exception { /* already here */ }
     @FXML private void goToWorkshop()  throws Exception { SceneManager.switchTo("Workshop.fxml"); }
     @FXML private void goToCustomers() throws Exception { SceneManager.switchTo("Customer.fxml"); }
+    @FXML private void goToInsurance() throws Exception { SceneManager.switchTo("Insurance.fxml"); }
     @FXML private void goToPolice()    throws Exception { SceneManager.switchTo("Police.fxml"); }
 }

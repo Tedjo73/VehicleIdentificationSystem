@@ -243,5 +243,6 @@ public class PoliceController {
     @FXML private void goToVehicles()  throws Exception { SceneManager.switchTo("Vehicle.fxml"); }
     @FXML private void goToWorkshop()  throws Exception { SceneManager.switchTo("Workshop.fxml"); }
     @FXML private void goToCustomers() throws Exception { SceneManager.switchTo("Customer.fxml"); }
+    @FXML private void goToInsurance() throws Exception { SceneManager.switchTo("Insurance.fxml"); }
     @FXML private void goToPolice()    throws Exception { /* already here */ }
 }

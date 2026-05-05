@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.vis.controller.LoginController"
+           styleClass="root-pane">
+
+    <VBox alignment="CENTER" spacing="18"
+          styleClass="login-card"
+          prefWidth="420" maxWidth="420">
+
+        <padding><Insets top="60" right="60" bottom="60" left="60"/></padding>
+
+        <Label text="VIS" styleClass="brand-title"/>
+        <Label text="Vehicle Identification System" styleClass="brand-subtitle"/>
+
+        <VBox spacing="4">
+            <Label text="Username" styleClass="field-label"/>
+            <TextField fx:id="usernameField" promptText="Enter username" styleClass="input-field"/>
+        </VBox>
+
+        <VBox spacing="4">
+            <Label text="Password" styleClass="field-label"/>
+            <PasswordField fx:id="passwordField" promptText="Enter password" styleClass="input-field"/>
+        </VBox>
+
+        <Label fx:id="errorLabel" styleClass="error-label" wrapText="true"/>
+
+        <Button fx:id="loginButton" text="SIGN IN" onAction="#handleLogin"
+                styleClass="primary-btn" maxWidth="Infinity"/>
+
+        <ProgressIndicator fx:id="loadingIndicator" prefWidth="36" prefHeight="36"/>
+    </VBox>
+</StackPane>

@@ -9,12 +9,15 @@ import com.vis.model.Vehicle;
 import com.vis.model.Violation;
 import com.vis.util.SceneManager;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Button;
+import javafx.animation.FadeTransition;
+import javafx.util.Duration;
 
 import java.util.List;
 import java.util.Map;
@@ -23,12 +26,15 @@ import java.util.stream.Collectors;
 public class DashboardController {
 
     @FXML private Label welcomeLabel;
+    @FXML private ProgressIndicator progressSpinner;
+    @FXML private Button liveBtn;
 
     // Stat badges
     @FXML private Label statVehicles;
     @FXML private Label statServices;
     @FXML private Label statCustomers;
     @FXML private Label statViolations;
+    @FXML private Label statInsurance;
 
     // Dashboard charts
     @FXML private PieChart  dashVehicleChart;
@@ -44,7 +50,19 @@ public class DashboardController {
     @FXML
     public void initialize() {
         welcomeLabel.setText("Welcome to Vehicle Identification System");
+        setupAnimations();
         loadStats();
+    }
+
+    private void setupAnimations() {
+        if (liveBtn != null) {
+            FadeTransition ft = new FadeTransition(Duration.millis(1000), liveBtn);
+            ft.setFromValue(1.0);
+            ft.setToValue(0.3);
+            ft.setCycleCount(FadeTransition.INDEFINITE);
+            ft.setAutoReverse(true);
+            ft.play();
+        }
     }
 
     private void loadStats() {
@@ -98,6 +116,11 @@ public class DashboardController {
             byStatus.forEach((status, cnt) ->
                 dashPoliceChart.getData().add(new PieChart.Data(status, cnt)));
 
+            // ── Insurance ────────────────────────────────────────────
+            statInsurance.setText(String.valueOf(new com.vis.dao.InsuranceDAO().getAllInsurance().size()));
+            
+            if (progressSpinner != null) progressSpinner.setVisible(false);
+
         } catch (Exception e) {
             // Silent fail — charts just stay empty if DB is unreachable
             e.printStackTrace();
@@ -108,6 +131,7 @@ public class DashboardController {
     @FXML private void goToCustomer()  throws Exception { SceneManager.switchTo("Customer.fxml"); }
     @FXML private void goToPolice()    throws Exception { SceneManager.switchTo("Police.fxml"); }
     @FXML private void goToVehicles()  throws Exception { SceneManager.switchTo("Vehicle.fxml"); }
+    @FXML private void goToInsurance() throws Exception { SceneManager.switchTo("Insurance.fxml"); }
     @FXML private void handleLogout()  throws Exception { SceneManager.switchTo("Login.fxml"); }
     @FXML private void handleExit()    { Platform.exit(); }
 }

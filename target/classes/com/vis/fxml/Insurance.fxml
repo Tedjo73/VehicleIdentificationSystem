@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.vis.controller.InsuranceController"
+            styleClass="root-pane"
+            prefWidth="1000" prefHeight="700">
+
+    <top>
+        <HBox styleClass="module-nav" alignment="CENTER_LEFT" spacing="4">
+            <Button text="🏠  Dashboard" onAction="#goToDashboard" styleClass="nav-home-btn"/>
+            <Region HBox.hgrow="NEVER" minWidth="12"/>
+            <Button text="Vehicles" onAction="#goToVehicles" styleClass="nav-tab-btn"/>
+            <Button text="Workshop" onAction="#goToWorkshop" styleClass="nav-tab-btn"/>
+            <Button text="Customers" onAction="#goToCustomer" styleClass="nav-tab-btn"/>
+            <Button text="Insurance" styleClass="nav-tab-btn nav-tab-active"/>
+            <Button text="Police" onAction="#goToPolice" styleClass="nav-tab-btn"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="12" styleClass="content-pane">
+            <padding><Insets top="16" right="20" bottom="16" left="20"/></padding>
+
+            <Label text="Insurance Management" styleClass="page-title"/>
+
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Button text="Add Policy" onAction="#handleAdd" styleClass="primary-btn"/>
+                <Button text="Edit Selected" onAction="#handleEdit" styleClass="secondary-btn"/>
+                <Button text="Delete Selected" onAction="#handleDelete" styleClass="danger-btn"/>
+                <Region HBox.hgrow="ALWAYS" />
+                <Label fx:id="statusLabel" styleClass="status-label"/>
+            </HBox>
+
+            <TableView fx:id="insuranceTable" VBox.vgrow="ALWAYS">
+                <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/></columnResizePolicy>
+                <placeholder><Label text="No insurance policies found." styleClass="field-label"/></placeholder>
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="50">
+                        <cellValueFactory><PropertyValueFactory property="insuranceId"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colVehicle" text="Vehicle ID" prefWidth="80">
+                        <cellValueFactory><PropertyValueFactory property="vehicleId"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colProvider" text="Provider" prefWidth="200">
+                        <cellValueFactory><PropertyValueFactory property="providerName"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colPolicy" text="Policy Number" prefWidth="150">
+                        <cellValueFactory><PropertyValueFactory property="policyNumber"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colStart" text="Start Date" prefWidth="100">
+                        <cellValueFactory><PropertyValueFactory property="startDate"/></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="colEnd" text="End Date" prefWidth="100">
+                        <cellValueFactory><PropertyValueFactory property="endDate"/></cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
